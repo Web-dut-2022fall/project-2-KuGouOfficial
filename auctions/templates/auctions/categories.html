@@ -1,0 +1,40 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+<h2>Categories</h2>
+
+<div>
+  <form method="get">
+
+    <select name="category" style="width:200px;height:30px;">
+        {{opts}}
+        <option></option>
+        {% for each in opts %}
+        <option>{{each}}</option>
+        {% endfor %}
+    </select>
+    <input type="submit" value="filter">
+  </form>
+</div>
+<div>
+    <ul>
+        {% for item in items %}
+        <li>
+            <div>
+                {% with "/static/imgs/"|add:item.img as img_src %}
+                    <h5>{{item.title}}</h5>
+                    {% with "/listing_page/"|add:item.title as link %}
+                    <a href={{link}}>
+                        <img class="pic" src={{img_src}}>
+                    </a>
+                    {%endwith%}
+                {%endwith%}
+
+                <p>Description-----{{item.description}}</p>
+                <p>Current Bid-----{{item.cur_bid}} <span> $ </span></p>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+    <div/>
+    {% endblock %}

@@ -1,0 +1,34 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+<h2>{{title}}</h2>
+<!- debug -->
+<h6 style="color:purple;"><a href="admin">{DEBUG: 管理员</a>：账号：root</h6>
+<h6 style="color:purple;">密码：123}</h6>
+<h6 style="color:white;">普通用户:</h6>
+<h6 style="color:white;">guest 密码：1</h6>
+<h6 style="color:white;">cmder 密码：1</h6>
+<!- debug -->
+
+<div>
+    <ul>
+        {% for item in items %}
+        <li>
+            <div>
+                {% with "/static/imgs/"|add:item.img as img_src %}
+                    <h5>{{item.title}}</h5>
+                    {% with "/listing_page/"|add:item.title as link %}
+                    <a href={{link}}>
+                        <img class="pic" src={{img_src}}>
+                    </a>
+                    {%endwith%}
+                {%endwith%}
+
+                <p>Description-----{{item.description}}</p>
+                <p>Current Bid-----{{item.cur_bid}} <span> $ </span></p>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+    <div/>
+    {% endblock %}

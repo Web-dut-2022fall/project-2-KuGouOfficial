@@ -1,0 +1,35 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+<h2>Create Listing</h2>
+<p style="color:green">{{hint1}}</p>
+<p style="color:red">{{error0}}</p>
+<div>
+
+    <form action="/create" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <p>
+            Write down your Title:<span style="color:red">{{error1}}</span>
+        </p>
+        <input name="title" type="text" value={{v1}}>
+        <p>
+            Input Base Bid($):<span style="color:red">{{error2}}</span>
+        </p>
+
+        <input name="price" type="text" value={{v2}}>
+        <p>
+            Write down your item's type:<span style="color:red">{{error3}}</span>
+        </p>
+        <input name="type" type="text" value={{v3}}>
+        <p>上传你的图片文件 <span style="color:red">{{error4}}</span></p>
+        <input type="file" id="upload" name="pic" /> <br />
+        <p>
+            Describe the item:<span style="color:red">{{error5}}</span></p>
+        </p>
+        <textarea name="description" rows="22" cols="80" >{{v4}}</textarea>
+        <p></p>
+        <input value="SUBMIT" type="submit">
+    </form>
+    <div/>
+    {% endblock %}

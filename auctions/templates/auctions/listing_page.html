@@ -1,0 +1,72 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+<h5>Listings Page</h5>
+<h2>{{title}}</h2>
+<h4 style="size:25px;color:red">{{error1}}</h4>
+<h4 style="size:25px;color:green">{{hint1}}</h4>
+<p></p>
+{% with "/static/imgs/"|add:img as img_src %}
+    {% with "/listing_page/"|add:title as link %}
+    <a href={{link}}>
+        <img class="pic" src={{img_src}}>
+    </a>
+<br>
+<br>
+{%endwith%}
+{%endwith%}
+
+<h5>Owner :<span>{{owner}}</span></h5>
+<h5>Item_type :<span>{{item_type}}</span></h5>
+<h5>Current Bid :<span>{{cur_bid}} $</span></h5>
+<h5>Description :</h5>
+<p>{{description}}</p>
+{% if user.is_authenticated %}
+{% if own != 'true' %}
+<form method="post">
+    {% csrf_token %}
+    <h3>Mark-Ups: </h3>
+    <input type="text" name="bid">
+    <button type="submit" style="width:20;height:40">Bid Up</button>
+</form>
+{% endif %}
+{% endif %}
+<h6>Created: {{create_date}}</h6>
+<h6>Modified: {{mod_date}}</h6>
+{% if user.is_authenticated %}
+<form method="post" >
+    {% csrf_token %}
+    {% if has == 'true' %}
+    <input name="add" value="false" type="hidden">
+    <input type="submit" value="remove from watchlist">
+    {% else %}
+    <input name="add" value="true" type="hidden">
+    <input type="submit" value="add to watchlist">
+    {% endif %}
+</form>
+
+{% if user.is_authenticated %}
+<form method="post">
+    {% csrf_token %}
+    <textarea name="comment" rows="6" cols="45"></textarea>
+    <input type="submit" value="submit comment">
+</form>
+{% endif %}
+
+<h5>Comments:</h5>
+<table width="200">
+    {%for each in coms %}
+    <tr>
+        <th>
+            <p>
+                <span style="font-weight:bold|700">{{each.user}}:</span>
+                {{each.com}}
+                <br><span>{{each.create_date}}</span>
+            </p>
+        </th>
+    </tr>
+
+    {% endfor %}
+</table>
+{% endif %}
+{% endblock %}
